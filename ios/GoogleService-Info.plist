@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>36079774415-qsoqonh8heluv46v7pvd05q501c09sb0.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.36079774415-qsoqonh8heluv46v7pvd05q501c09sb0</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>36079774415-2cnpidke98fblviokmtg3tet5ouq6brb.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCT2XQjlhiZ2MqTmWxoG4QpF_9vFL_acO4</string>
+	<key>GCM_SENDER_ID</key>
+	<string>36079774415</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>kkotfarm.gowork.app</string>
+	<key>PROJECT_ID</key>
+	<string>fulfillment-wms</string>
+	<key>STORAGE_BUCKET</key>
+	<string>fulfillment-wms.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:36079774415:ios:5f379251bf6cd4420d65ba</string>
+</dict>
+</plist>
