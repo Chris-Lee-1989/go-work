@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import {View, SafeAreaView} from 'react-native';
+import {View, SafeAreaView, KeyboardAvoidingView, Platform} from 'react-native';
 import React, {useCallback, useEffect, useState} from 'react';
 import useAxios from '../modules/useAxios';
 import spinnerState from '../atoms/spinnerState';
@@ -93,45 +93,54 @@ export default function Login(props: Props) {
   }, [loginRes, loginState, setSpinner, successLogin, toast]);
 
   return (
-    <SafeAreaView
-      style={{
-        backgroundColor: grey[0],
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-      }}>
-      <View style={{width: '80%', marginBottom: 40}}>
-        <Text size={2} fw="bold" align="center">
-          OP System
-        </Text>
-        <View style={{padding: 8}} />
-        <View>
-          <TextField
-            size={1}
-            type="email"
-            placeholder="아이디"
-            value={email}
-            onChange={value => setEmail(value)}
-            isReadOnly={loginState === 'loading'}
-          />
-          <View style={{padding: 4}} />
-          <TextField
-            type="password"
-            size={1}
-            placeholder="비밀번호"
-            value={pw}
-            onChange={value => setPW(value)}
-            isReadOnly={loginState === 'loading'}
-          />
-          <View style={{padding: 4}} />
-          <Button
-            bg="black"
-            title="로그인"
-            isLoading={loginState === 'loading'}
-            onPress={onPressLoginButton}
-          />
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={{flex: 1}}>
+      <SafeAreaView
+        style={{
+          backgroundColor: grey[0],
+          flex: 1,
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}>
+        <View style={{width: '80%', marginBottom: 40}}>
+          <Text size={2} fw="bold" align="center">
+            꽃팜 출퇴근 기록부
+          </Text>
+          <View style={{height: 8}} />
+          <Text size={0.8} fw="regular" align="center" color={grey[5]}>
+            아이디는 회사메일, 초기비번은 1234
+          </Text>
+          <View style={{padding: 8}} />
+
+          <View>
+            <TextField
+              size={1}
+              type="email"
+              placeholder="아이디"
+              value={email}
+              onChange={value => setEmail(value)}
+              isReadOnly={loginState === 'loading'}
+            />
+            <View style={{padding: 4}} />
+            <TextField
+              type="password"
+              size={1}
+              placeholder="비밀번호"
+              value={pw}
+              onChange={value => setPW(value)}
+              isReadOnly={loginState === 'loading'}
+            />
+            <View style={{padding: 4}} />
+            <Button
+              bg="black"
+              title="로그인"
+              isLoading={loginState === 'loading'}
+              onPress={onPressLoginButton}
+            />
+          </View>
         </View>
-      </View>
-    </SafeAreaView>
+      </SafeAreaView>
+    </KeyboardAvoidingView>
   );
 }

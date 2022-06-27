@@ -5,6 +5,7 @@ const Tab = createBottomTabNavigator();
 
 import BottomMenu from '../components/global/BottomMenu';
 import WorkRouter from './WorkRouter';
+import SettingsRouter from './SettingsRouter';
 
 export default function TapRouter() {
   return (
@@ -19,7 +20,15 @@ export default function TapRouter() {
         component={WorkRouter}
         options={{
           // 진입 시 새로고침
-          unmountOnBlur: true,
+          unmountOnBlur: false,
+        }}
+      />
+      <Tab.Screen
+        name="settingsRouter"
+        component={SettingsRouter}
+        options={{
+          // 진입 시 새로고침
+          unmountOnBlur: false,
         }}
       />
     </Tab.Navigator>

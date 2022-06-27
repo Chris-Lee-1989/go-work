@@ -29,7 +29,12 @@ export default function BottomMenu(props: any) {
         {props.state.routes.map((route: any, idx: number) => {
           const isFocused = props.state.index === idx;
           //   let icon = null;
-          let text = route.name === 'workRouter' ? '출/퇴근' : '';
+          let text =
+            route.name === 'workRouter'
+              ? '출/퇴근'
+              : route.name === 'settingsRouter'
+              ? '설정'
+              : '';
           return (
             <Pressable
               key={idx}
