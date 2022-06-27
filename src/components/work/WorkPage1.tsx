@@ -127,48 +127,6 @@ export default function WorkPage1(props: Props) {
               workingTime += week.workingTime ? Number(week.workingTime) : 0;
               return <WeekLing key={idx} isActive={isSelected} data={week} />;
             })}
-            {(() => {
-              const workingHour = Math.floor(workingTime / 3600);
-              const workingMin = Math.floor((workingTime % 3600) / 60);
-              const workingSec = (workingTime % 3600) % 60;
-              return (
-                <View
-                  style={{
-                    padding: 20,
-                    borderRadius: 4,
-                    backgroundColor: grey[9],
-                  }}>
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                    }}>
-                    <Text size={0.9} color={grey[0]} fw="regular">
-                      이번주{' '}
-                    </Text>
-                    <Text size={1.1} color={lime[4]} fw="bold">
-                      {workingHour}
-                    </Text>
-                    <Text size={0.9} color={grey[0]} fw="regular">
-                      시간{' '}
-                    </Text>
-                    <Text size={1.1} color={lime[4]} fw="bold">
-                      {workingMin}
-                    </Text>
-                    <Text size={0.9} color={grey[0]} fw="regular">
-                      분{' '}
-                    </Text>
-                    <Text size={1.1} color={lime[4]} fw="bold">
-                      {workingSec}
-                    </Text>
-                    <Text size={0.9} color={grey[0]} fw="regular">
-                      초 근무
-                    </Text>
-                  </View>
-                </View>
-              );
-            })()}
           </View>
         ) : (
           // 데이터 조회중
@@ -182,6 +140,51 @@ export default function WorkPage1(props: Props) {
           </View>
         )}
       </ScrollView>
+      {(() => {
+        const workingHour = Math.floor(workingTime / 3600);
+        const workingMin = Math.floor((workingTime % 3600) / 60);
+        const workingSec = (workingTime % 3600) % 60;
+        return (
+          selectRes && (
+            <View
+              style={{
+                margin: 20,
+                padding: 20,
+                borderRadius: 4,
+                backgroundColor: grey[9],
+              }}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}>
+                <Text size={0.9} color={grey[0]} fw="regular">
+                  이번주{' '}
+                </Text>
+                <Text size={1.1} color={lime[4]} fw="bold">
+                  {workingHour}
+                </Text>
+                <Text size={0.9} color={grey[0]} fw="regular">
+                  시간{' '}
+                </Text>
+                <Text size={1.1} color={lime[4]} fw="bold">
+                  {workingMin}
+                </Text>
+                <Text size={0.9} color={grey[0]} fw="regular">
+                  분{' '}
+                </Text>
+                <Text size={1.1} color={lime[4]} fw="bold">
+                  {workingSec}
+                </Text>
+                <Text size={0.9} color={grey[0]} fw="regular">
+                  초 근무
+                </Text>
+              </View>
+            </View>
+          )
+        );
+      })()}
     </View>
   );
 }
