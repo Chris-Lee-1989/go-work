@@ -104,7 +104,9 @@ export const lpad = (str: string, padLen: number, padStr: string) => {
   }
   str += ''; // 문자로
   padStr += ''; // 문자로
-  while (str.length < padLen) str = padStr + str;
+  while (str.length < padLen) {
+    str = padStr + str;
+  }
   str = str.length >= padLen ? str.substring(0, padLen) : str;
   return str;
 };
@@ -116,21 +118,13 @@ export const comma = (num: string) => {
   len = num.length;
   str = num.substring(0, point);
   while (point < len) {
-    if (str !== '') str += ',';
+    if (str !== '') {
+      str += ',';
+    }
     str += num.substring(point, point + 3);
     point += 3;
   }
   return str;
-};
-
-export const getByte = (text: string) => {
-  var bts, ii, chr; // 한글 3byte
-  for (
-    bts = ii = 0;
-    (chr = text.charCodeAt(ii++));
-    bts += chr >> 11 ? 3 : chr >> 7 ? 2 : 1
-  );
-  return bts;
 };
 
 export const getNumber = (str: string) => {
@@ -203,4 +197,16 @@ export const getCardColor = (cardName: string) => {
   }
 
   return {bgColor, cardColor};
+};
+
+// 주차 구하기
+export const getWeek = (year: string, month: string, day: string) => {
+  let days = 0;
+  let gap = new Date(Number(year), 1, 1).getDay();
+  for (let i = 1; i < Number(month); i++) {
+    days += new Date(Number(year), i, 0).getDate();
+  }
+  days = Number(days) + Number(day) - gap;
+  days = days > 0 ? days : 0;
+  return Math.floor(days / 7) + 1;
 };

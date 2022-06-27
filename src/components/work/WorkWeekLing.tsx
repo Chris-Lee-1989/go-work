@@ -24,14 +24,14 @@ export default function WorkWeekLing({data, isActive}: Props) {
   // 일 권장 근무 시간 = 9시간
   const time = 9 * 60 * 60;
   // 근무시간(초)
-  const workingTime = data.workingTime ? data.workingTime : 0;
+  const workingTime = data.workingTime ? Number(data.workingTime) : 0;
   // 근무시간 / 권장근무시간 * 100
   const percent = workingTime / time > 1 ? 1 : workingTime / time;
   // 스크린 너빕
   const SCREEN_WIDTH = Dimensions.get('screen').width;
 
   // 애니메이션 변수
-  const aniWidth = useSharedValue(200);
+  const aniWidth = useSharedValue(0);
   // 애니메이션 스타일
   const widthStyle = useAnimatedStyle(() => {
     return {
@@ -42,8 +42,11 @@ export default function WorkWeekLing({data, isActive}: Props) {
   // 화면이 활성화 되면,
   useEffect(() => {
     if (isActive) {
-      aniWidth.value =
+      const width =
         (SCREEN_WIDTH - 44) * (data.isHoliday !== 'Y' ? percent : 1);
+      setTimeout(() => {
+        aniWidth.value = width;
+      }, 100);
     } else {
       aniWidth.value = 0;
     }
@@ -52,7 +55,6 @@ export default function WorkWeekLing({data, isActive}: Props) {
   return (
     <View
       style={{
-        backgroundColor: 'white',
         marginBottom: 20,
       }}>
       <View style={{marginBottom: 8}}>

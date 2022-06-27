@@ -6,4 +6,5 @@ export default interface WeekWorkProps {
   workingSec: number | null;
   workingTime: number | null;
   isHoliday: 'Y' | 'N' | null;
+  todayWorkingTime: number | null;
 }

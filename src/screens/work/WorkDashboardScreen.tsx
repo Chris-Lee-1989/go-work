@@ -9,7 +9,6 @@ import {grey, lime} from '@ant-design/colors';
 // 페이지
 import WorkPage1 from '../../components/work/WorkPage1';
 import WorkPage2 from '../../components/work/WorkPage2';
-import WorkPage3 from '../../components/work/WorkPage3';
 
 // 인터페이스
 interface Props {
@@ -34,7 +33,7 @@ export default function WorkDashboardScreen(props: Props) {
   const [currentPage, setCurrentPage] = useState<number>(0);
   const [currentPos, setCurrentPos] = useState<number>(0);
   // 페이지 타이틀
-  const pageTitles = ['주', '월', '년'];
+  const pageTitles = ['주', '월'];
   const posMark = useMemo(() => {
     let pos = 0;
     pos += Number(currentPos.toFixed(2));
@@ -107,14 +106,15 @@ export default function WorkDashboardScreen(props: Props) {
         onPageSelected={(event: any) => {
           setCurrentPage(event.nativeEvent.position);
         }}
-        // showPageIndicator={true} // Only iOS
         style={{
           flex: 1,
+          margin: 0,
+          padding: 0,
+          backgroundColor: 'white',
         }}
         initialPage={0}>
         <WorkPage1 isSelected={currentPage === 0} />
         <WorkPage2 isSelected={currentPage === 1} />
-        <WorkPage3 isSelected={currentPage === 2} />
       </PagerView>
     </SafeAreaView>
   );
