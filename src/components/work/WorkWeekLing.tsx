@@ -74,7 +74,7 @@ export default function WorkWeekLing({data, isActive}: Props) {
                 height: 16,
                 borderRadius: 2,
                 backgroundColor:
-                  data.workingPercent < 0.3
+                  data.workingPercent < 0.5
                     ? red[3]
                     : data.workingPercent < 1
                     ? gold[3]

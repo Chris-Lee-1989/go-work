@@ -1,6 +1,12 @@
 /* eslint-disable react-native/no-inline-styles */
 /* eslint-disable react/self-closing-comp */
-import {View, SafeAreaView, ScrollView, Alert} from 'react-native';
+import {
+  View,
+  SafeAreaView,
+  ScrollView,
+  Alert,
+  TouchableOpacity,
+} from 'react-native';
 import React, {useEffect} from 'react';
 import Header from '../../components/global/Header';
 import {grey} from '@ant-design/colors';
@@ -9,6 +15,9 @@ import {useRecoilState} from 'recoil';
 import workerState from '../../atoms/workerState';
 import useAxios from '../../modules/useAxios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Text from '../../components/text/Text';
+import {faChevronCircleRight} from '@fortawesome/free-solid-svg-icons';
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 
 // 인터페이스
 interface Props {
@@ -48,6 +57,74 @@ export default function Home(props: Props) {
       {/* 헤더 */}
       <Header pageProps={props} title={'설정'} />
       <ScrollView style={{flex: 1, backgroundColor: grey[0], padding: 20}}>
+        {worker.isAdmin === 'Y' && (
+          <View
+            style={{
+              paddingHorizontal: 20,
+              borderRadius: 4,
+              backgroundColor: 'white',
+              marginBottom: 20,
+            }}>
+            <TouchableOpacity
+              onPress={() => props.navigation.push('departmentMngScreen')}
+              style={{
+                flexDirection: 'row',
+                height: 50,
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
+              <View style={{flex: 1}}>
+                <Text fw="regular">부서 관리</Text>
+              </View>
+              <View>
+                <FontAwesomeIcon
+                  icon={faChevronCircleRight}
+                  size={20}
+                  color={grey[1]}
+                />
+              </View>
+            </TouchableOpacity>
+            <View style={{height: 1, backgroundColor: grey[0]}} />
+            <TouchableOpacity
+              onPress={() => props.navigation.push('workerMngScreen')}
+              style={{
+                flexDirection: 'row',
+                height: 50,
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
+              <View style={{flex: 1}}>
+                <Text fw="regular">직원 관리</Text>
+              </View>
+              <View>
+                <FontAwesomeIcon
+                  icon={faChevronCircleRight}
+                  size={20}
+                  color={grey[1]}
+                />
+              </View>
+            </TouchableOpacity>
+            <View style={{height: 1, backgroundColor: grey[0]}} />
+            <TouchableOpacity
+              style={{
+                flexDirection: 'row',
+                height: 50,
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
+              <View style={{flex: 1}}>
+                <Text fw="regular">메뉴 3</Text>
+              </View>
+              <View>
+                <FontAwesomeIcon
+                  icon={faChevronCircleRight}
+                  size={20}
+                  color={grey[1]}
+                />
+              </View>
+            </TouchableOpacity>
+          </View>
+        )}
         <View>
           <Button title="로그아웃" onPress={() => onClickLogoutButton()} />
         </View>

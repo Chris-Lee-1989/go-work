@@ -3,6 +3,8 @@ import React from 'react';
 import {lime, grey} from '@ant-design/colors';
 import {Pressable, SafeAreaView, View} from 'react-native';
 import Text from '../text/Text';
+import {faMapMarkedAlt, faWrench} from '@fortawesome/free-solid-svg-icons';
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 
 export default function BottomMenu(props: any) {
   return (
@@ -28,13 +30,18 @@ export default function BottomMenu(props: any) {
         }}>
         {props.state.routes.map((route: any, idx: number) => {
           const isFocused = props.state.index === idx;
-          //   let icon = null;
           let text =
             route.name === 'workRouter'
               ? '출/퇴근'
               : route.name === 'settingsRouter'
               ? '설정'
               : '';
+          let icon =
+            route.name === 'workRouter'
+              ? faMapMarkedAlt
+              : route.name === 'settingsRouter'
+              ? faWrench
+              : faWrench;
           return (
             <Pressable
               key={idx}
@@ -42,7 +49,7 @@ export default function BottomMenu(props: any) {
                 flex: 1,
                 alignItems: 'center',
                 justifyContent: 'center',
-                height: 50,
+                height: 70,
               }}
               onPress={() => {
                 const event = props.navigation.emit({
@@ -54,17 +61,17 @@ export default function BottomMenu(props: any) {
                   props.navigation.navigate({name: route.name, merge: true});
                 }
               }}>
-              <View
-                style={{
-                  borderRadius: 100,
-                  paddingVertical: 6,
-                  paddingHorizontal: 12,
-                  backgroundColor: isFocused ? lime[3] : 'white',
-                }}>
+              <View style={{alignItems: 'center', justifyContent: 'center'}}>
+                <FontAwesomeIcon
+                  icon={icon}
+                  size={20}
+                  color={isFocused ? lime[4] : grey[2]}
+                />
+                <View style={{height: 6}} />
                 <Text
-                  size={0.85}
-                  fw={isFocused ? 'bold' : 'regular'}
-                  color={isFocused ? grey[9] : grey[5]}
+                  size={0.7}
+                  fw={isFocused ? 'bold' : 'medium'}
+                  color={isFocused ? lime[4] : grey[2]}
                   align="center">
                   {text}
                 </Text>
