@@ -1,4 +1,3 @@
-/* eslint-disable react/self-closing-comp */
 /* eslint-disable react-native/no-inline-styles */
 import {Dimensions, View} from 'react-native';
 import React, {useEffect} from 'react';
@@ -21,12 +20,8 @@ interface Props {
 export default function WorkWeekLing({data, isActive}: Props) {
   // 요일
   const labelArr = ['월', '화', '수', '목', '금', '토', '일'];
-  // 일 권장 근무 시간 = 9시간
-  const time = 9 * 60 * 60;
   // 근무시간(초)
   const workingTime = data.workingTime ? Number(data.workingTime) : 0;
-  // 근무시간 / 권장근무시간 * 100
-  const percent = workingTime / time > 1 ? 1 : workingTime / time;
   // 스크린 너빕
   const SCREEN_WIDTH = Dimensions.get('screen').width;
 
@@ -43,14 +38,15 @@ export default function WorkWeekLing({data, isActive}: Props) {
   useEffect(() => {
     if (isActive) {
       const width =
-        (SCREEN_WIDTH - 44) * (data.isHoliday !== 'Y' ? percent : 1);
+        (SCREEN_WIDTH - 44) *
+        (data.isHoliday !== 'Y' ? data.workingPercent : 1);
       setTimeout(() => {
         aniWidth.value = width;
       }, 100);
     } else {
       aniWidth.value = 0;
     }
-  }, [SCREEN_WIDTH, aniWidth, data.isHoliday, isActive, percent]);
+  }, [SCREEN_WIDTH, aniWidth, data.isHoliday, isActive, data.workingPercent]);
 
   return (
     <View
@@ -78,12 +74,10 @@ export default function WorkWeekLing({data, isActive}: Props) {
                 height: 16,
                 borderRadius: 2,
                 backgroundColor:
-                  percent < 0.3
+                  data.workingPercent < 0.3
                     ? red[3]
-                    : percent < 0.6
+                    : data.workingPercent < 1
                     ? gold[3]
-                    : time > (data.workingTime !== null ? data.workingTime : 0)
-                    ? lime[1]
                     : lime[3],
                 alignItems: 'flex-end',
                 justifyContent: 'center',
@@ -115,7 +109,7 @@ export default function WorkWeekLing({data, isActive}: Props) {
             ]}>
             <View style={{paddingRight: 8}}>
               <Text fw="regular" size={0.6} align="right">
-                공휴일
+                {data.holidayName ? data.holidayName : '공휴일'}
               </Text>
             </View>
           </Animated.View>
