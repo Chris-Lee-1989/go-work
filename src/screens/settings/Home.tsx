@@ -45,7 +45,6 @@ export default function Home(props: Props) {
   // 로그인 로직
   const [logoutState, , _logout] = useAxios('post', '/v1/gowork/auth/logout');
   useEffect(() => {
-    console.log(logoutState);
     if (logoutState === 'success') {
       AsyncStorage.setItem('access_token', '');
       props.navigation.replace('loginScreen');
