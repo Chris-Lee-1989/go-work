@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>fulfillment-wms</string>
+	<string>꽃팜 출퇴근</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -35,8 +35,12 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>For taking photos</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string>Program requires GPS to track cars and job orders</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>For saving photos</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Fonts/NotoSansKR-Black.otf</string>
@@ -56,6 +60,7 @@
 	</array>
 	<key>UIBackgroundModes</key>
 	<array>
+		<string>location</string>
 		<string>remote-notification</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
@@ -67,15 +72,8 @@
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	<key>NSCameraUsageDescription</key>
-	<string>For taking photos</string>
-
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>For saving photos</string>
 </dict>
 </plist>

@@ -26,7 +26,7 @@ export default function BottomMenu(props: any) {
         style={{
           display: 'flex',
           flexDirection: 'row',
-          height: 50,
+          height: 60,
         }}>
         {props.state.routes.map((route: any, idx: number) => {
           const isFocused = props.state.index === idx;
@@ -49,7 +49,6 @@ export default function BottomMenu(props: any) {
                 flex: 1,
                 alignItems: 'center',
                 justifyContent: 'center',
-                height: 70,
               }}
               onPress={() => {
                 const event = props.navigation.emit({
@@ -61,15 +60,19 @@ export default function BottomMenu(props: any) {
                   props.navigation.navigate({name: route.name, merge: true});
                 }
               }}>
-              <View style={{alignItems: 'center', justifyContent: 'center'}}>
+              <View
+                style={{
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}>
                 <FontAwesomeIcon
                   icon={icon}
                   size={20}
                   color={isFocused ? lime[4] : grey[2]}
                 />
-                <View style={{height: 6}} />
+                <View style={{height: 4}} />
                 <Text
-                  size={0.7}
+                  size={0.6}
                   fw={isFocused ? 'bold' : 'medium'}
                   color={isFocused ? lime[4] : grey[2]}
                   align="center">

@@ -15,6 +15,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import {grey, blue, red, orange} from '@ant-design/colors';
 import messaging from '@react-native-firebase/messaging';
+import Geolocation from 'react-native-geolocation-service';
 
 const App = () => {
   useEffect(() => {
@@ -32,6 +33,7 @@ const App = () => {
     if (enabled) {
       // console.log('Authorization status ' + Platform.OS + ' : ', authStatus);
     }
+    Geolocation.requestAuthorization('whenInUse');
   }
 
   return (

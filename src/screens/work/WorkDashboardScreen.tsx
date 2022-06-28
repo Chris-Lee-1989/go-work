@@ -2,7 +2,6 @@
 import {Dimensions, Pressable, SafeAreaView, View} from 'react-native';
 import React, {useMemo, useState} from 'react';
 import Header from '../../components/global/Header';
-import PagerView from 'react-native-pager-view';
 import Text from '../../components/text/Text';
 import {grey, lime} from '@ant-design/colors';
 
@@ -19,19 +18,9 @@ interface Props {
 export default function WorkDashboardScreen(props: Props) {
   // 스크린 너비
   const SCREEN_WIDTH = Dimensions.get('screen').width;
-  // 페이저뷰 REF
-  const [pagerViewRef, setRef] = useState<any>(null);
-  // 페이지 이동
-  // const _setPage = useMemo(() => {
-  //   return pagerViewRef ? pagerViewRef?.setPage : () => {};
-  // }, [pagerViewRef]);
-  // 애니메이션 없이 페이지 이동
-  const _setPageWithoutAni = useMemo(() => {
-    return pagerViewRef ? pagerViewRef?.setPageWithoutAnimation : () => {};
-  }, [pagerViewRef]);
   // 페이지 현재 위치
   const [currentPage, setCurrentPage] = useState<number>(0);
-  const [currentPos, setCurrentPos] = useState<number>(0);
+  const [currentPos] = useState<number>(0);
   // 페이지 타이틀
   const pageTitles = ['주', '월'];
   const posMark = useMemo(() => {
@@ -65,7 +54,7 @@ export default function WorkDashboardScreen(props: Props) {
               <Pressable
                 key={idx}
                 onPress={() => {
-                  _setPageWithoutAni(idx);
+                  setCurrentPage(idx);
                 }}
                 style={{
                   flex: 1,
@@ -96,26 +85,19 @@ export default function WorkDashboardScreen(props: Props) {
         </View>
       </View>
       {/* 뷰 */}
-      <PagerView
-        ref={(ref: any) => setRef(ref)}
-        scrollEnabled={true}
-        onPageScroll={(event: any) => {
-          setCurrentPos(event.nativeEvent.offset);
-          setCurrentPage(event.nativeEvent.position);
-        }}
-        onPageSelected={(event: any) => {
-          setCurrentPage(event.nativeEvent.position);
-        }}
+      <View
         style={{
           flex: 1,
           margin: 0,
           padding: 0,
           backgroundColor: 'white',
-        }}
-        initialPage={0}>
-        <WorkPage1 isSelected={currentPage === 0} />
-        <WorkPage2 isSelected={currentPage === 1} />
-      </PagerView>
+        }}>
+        {currentPage === 0 ? (
+          <WorkPage1 isSelected={currentPage === 0} />
+        ) : (
+          <WorkPage2 isSelected={currentPage === 1} />
+        )}
+      </View>
     </SafeAreaView>
   );
 }

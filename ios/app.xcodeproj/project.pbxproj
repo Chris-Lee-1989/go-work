@@ -24,6 +24,7 @@
 		CEAEAECB604B421C94D94E6C /* antfill.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F7CF93E50A5E40F2BA87DBE6 /* antfill.ttf */; };
 		E15990FF285862C20047AE2D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E15990FE285862C20047AE2D /* GoogleService-Info.plist */; };
 		E1EEF9A32851BB7200AD6D37 /* Fonts in Resources */ = {isa = PBXBuildFile; fileRef = E1EEF9A22851BB7200AD6D37 /* Fonts */; };
+		E1F1EC03286AF82400B841ED /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F1EC02286AF82400B841ED /* File.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +64,8 @@
 		E15990FB28584C610047AE2D /* app.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = app.entitlements; path = app/app.entitlements; sourceTree = "<group>"; };
 		E15990FE285862C20047AE2D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		E1EEF9A22851BB7200AD6D37 /* Fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Fonts; sourceTree = "<group>"; };
+		E1F1EC01286AF82400B841ED /* app-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "app-Bridging-Header.h"; sourceTree = "<group>"; };
+		E1F1EC02286AF82400B841ED /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		F7CF93E50A5E40F2BA87DBE6 /* antfill.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = antfill.ttf; path = "../node_modules/@ant-design/icons-react-native/fonts/antfill.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -115,6 +118,8 @@
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */,
 				13B07FB71A68108700A75B9A /* main.m */,
+				E1F1EC02286AF82400B841ED /* File.swift */,
+				E1F1EC01286AF82400B841ED /* app-Bridging-Header.h */,
 			);
 			name = app;
 			sourceTree = "<group>";
@@ -248,7 +253,7 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						LastSwiftMigration = 1120;
+						LastSwiftMigration = 1250;
 					};
 				};
 			};
@@ -475,6 +480,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
+				E1F1EC03286AF82400B841ED /* File.swift in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -494,6 +500,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 331B9C5145D21A224BFA211D /* Pods-app-appTests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -521,6 +528,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = A7C5EF2E250AF20310F9CEBD /* Pods-app-appTests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
 				INFOPLIST_FILE = appTests/Info.plist;
@@ -618,6 +626,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = kkotfarm.gowork.app;
 				PRODUCT_NAME = app;
+				SWIFT_OBJC_BRIDGING_HEADER = "app-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -693,6 +702,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = kkotfarm.gowork.app;
 				PRODUCT_NAME = app;
+				SWIFT_OBJC_BRIDGING_HEADER = "app-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};

@@ -9,11 +9,17 @@ import Text from '../../components/text/Text';
 import Button from '../../components/input/Button';
 import useAxios from '../../modules/useAxios';
 import spinnerState from '../../atoms/spinnerState';
+import Geolocation from 'react-native-geolocation-service';
 
 // 인터페이스
 interface Props {
   navigation: any;
   route: any;
+}
+
+interface ILocation {
+  latitude: number;
+  longitude: number;
 }
 
 export default function WorkScreen(props: Props) {
@@ -33,7 +39,6 @@ export default function WorkScreen(props: Props) {
   );
   useEffect(() => {
     if (workingState === 'loading') {
-      setSpinner(true);
     } else {
       setSpinner(false);
       if (workingState === 'success') {
@@ -50,11 +55,21 @@ export default function WorkScreen(props: Props) {
       {
         text: '네',
         onPress: async () => {
-          _working({isWork: 'Y'});
+          setSpinner(true);
+          Geolocation.getCurrentPosition(
+            position => {
+              const {latitude, longitude} = position.coords;
+              _working({isWork: 'Y', latitude, longitude});
+            },
+            error => {
+              console.log(error.code, error.message);
+            },
+            {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
+          );
         },
       },
     ]);
-  }, [_working]);
+  }, [_working, setSpinner]);
 
   // 퇴근 버튼 클릭 이벤트
   const clickEndButton = useCallback(() => {
