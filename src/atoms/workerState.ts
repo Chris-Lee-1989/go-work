@@ -6,9 +6,12 @@ interface Worker {
   name: string | undefined;
   nickname: string | undefined;
   level: string | undefined;
+  levelName: string | undefined;
   email: string | undefined;
   isWork: boolean;
   pushToken: string | undefined;
+  department: string | undefined;
+  isAdmin: 'Y' | 'N';
 }
 
 // 토큰 State
@@ -18,10 +21,13 @@ export default atom<Worker>({
     isLogin: false,
     workerKey: undefined,
     name: undefined,
+    levelName: undefined,
     nickname: undefined,
     level: undefined,
     email: undefined,
     isWork: false,
     pushToken: undefined,
+    department: undefined,
+    isAdmin: 'N',
   },
 });
