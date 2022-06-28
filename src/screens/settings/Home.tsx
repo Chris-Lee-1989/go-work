@@ -104,27 +104,55 @@ export default function Home(props: Props) {
                 />
               </View>
             </TouchableOpacity>
-            <View style={{height: 1, backgroundColor: grey[0]}} />
-            <TouchableOpacity
-              style={{
-                flexDirection: 'row',
-                height: 50,
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}>
-              <View style={{flex: 1}}>
-                <Text fw="regular">메뉴 3</Text>
-              </View>
-              <View>
-                <FontAwesomeIcon
-                  icon={faChevronCircleRight}
-                  size={20}
-                  color={grey[1]}
-                />
-              </View>
-            </TouchableOpacity>
           </View>
         )}
+        <View
+          style={{
+            paddingHorizontal: 20,
+            borderRadius: 4,
+            backgroundColor: 'white',
+            marginBottom: 20,
+          }}>
+          <TouchableOpacity
+            onPress={() => props.navigation.push('passwordScreen')}
+            style={{
+              flexDirection: 'row',
+              height: 50,
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}>
+            <View style={{flex: 1}}>
+              <Text fw="regular">비밀번호 변경</Text>
+            </View>
+            <View>
+              <FontAwesomeIcon
+                icon={faChevronCircleRight}
+                size={20}
+                color={grey[1]}
+              />
+            </View>
+          </TouchableOpacity>
+          <View style={{height: 1, backgroundColor: grey[0]}} />
+          <TouchableOpacity
+            onPress={() => props.navigation.push('myInfoScreen')}
+            style={{
+              flexDirection: 'row',
+              height: 50,
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}>
+            <View style={{flex: 1}}>
+              <Text fw="regular">내 정보 변경</Text>
+            </View>
+            <View>
+              <FontAwesomeIcon
+                icon={faChevronCircleRight}
+                size={20}
+                color={grey[1]}
+              />
+            </View>
+          </TouchableOpacity>
+        </View>
         <View>
           <Button title="로그아웃" onPress={() => onClickLogoutButton()} />
         </View>
