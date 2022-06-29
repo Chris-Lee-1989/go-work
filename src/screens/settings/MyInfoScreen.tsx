@@ -266,6 +266,7 @@ export default function MyInfoScreen(props: Props) {
             );
           })}
         </View>
+        <View style={{height: 100}} />
       </ScrollView>
       <View style={{padding: 20}}>
         <Button

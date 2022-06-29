@@ -11,6 +11,7 @@ interface Worker {
   isWork: boolean;
   pushToken: string | undefined;
   department: string | undefined;
+  departmentName: string | undefined;
   isAdmin: 'Y' | 'N';
 }
 
@@ -28,6 +29,7 @@ export default atom<Worker>({
     isWork: false,
     pushToken: undefined,
     department: undefined,
+    departmentName: undefined,
     isAdmin: 'N',
   },
 });

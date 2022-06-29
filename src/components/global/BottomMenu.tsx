@@ -3,7 +3,11 @@ import React from 'react';
 import {lime, grey} from '@ant-design/colors';
 import {Pressable, SafeAreaView, View} from 'react-native';
 import Text from '../text/Text';
-import {faMapMarkedAlt, faWrench} from '@fortawesome/free-solid-svg-icons';
+import {
+  faMapMarkedAlt,
+  faWrench,
+  faBuilding,
+} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 
 export default function BottomMenu(props: any) {
@@ -35,12 +39,16 @@ export default function BottomMenu(props: any) {
               ? '출/퇴근'
               : route.name === 'settingsRouter'
               ? '설정'
+              : route.name === 'departmentRouter'
+              ? '부서'
               : '';
           let icon =
             route.name === 'workRouter'
               ? faMapMarkedAlt
               : route.name === 'settingsRouter'
               ? faWrench
+              : route.name === 'departmentRouter'
+              ? faBuilding
               : faWrench;
           return (
             <Pressable

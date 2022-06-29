@@ -1,5 +1,13 @@
 /* eslint-disable react-native/no-inline-styles */
-import {Alert, Pressable, SafeAreaView, View} from 'react-native';
+import {
+  Alert,
+  Dimensions,
+  Pressable,
+  RefreshControl,
+  SafeAreaView,
+  ScrollView,
+  View,
+} from 'react-native';
 import React, {useCallback, useEffect, useState} from 'react';
 import Header from '../../components/global/Header';
 import {useRecoilState, useSetRecoilState} from 'recoil';
@@ -23,6 +31,10 @@ interface ILocation {
 }
 
 export default function WorkScreen(props: Props) {
+  // 새로고침 여부
+  const [isRefresh] = useState<boolean>(false);
+  // 화면 높이
+  const SCREEN_HEIGHT = Dimensions.get('screen').height;
   // 직원 정보
   const [worker, setWorker] = useRecoilState(workerState);
 
@@ -87,86 +99,99 @@ export default function WorkScreen(props: Props) {
   return (
     <SafeAreaView style={{backgroundColor: 'white', flex: 1}}>
       <Header pageProps={props} title={'출퇴근'} />
-      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-        <Pressable
-          style={[
-            {
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              width: 150,
-              height: 150,
-              borderRadius: 150,
-              borderWidth: 1,
-              borderColor: grey[9],
-              backgroundColor: worker.isWork ? lime[3] : red[3],
-              marginBottom: 32,
-            },
-            !isPress
-              ? {
-                  shadowColor: '#000',
-                  shadowOffset: {
-                    width: 0,
-                    height: 3,
-                  },
-                  shadowOpacity: 0.2,
-                  shadowRadius: 3.84,
-                  elevation: 6,
-                }
-              : {
-                  shadowColor: '#000',
-                  shadowOffset: {
-                    width: 0,
-                    height: 1,
-                  },
-                  shadowOpacity: 0.1,
-                  shadowRadius: 3.84,
-                  elevation: 1,
-                },
-          ]}
-          onPressIn={() => {
-            setPress(true);
-          }}
-          onPressOut={() => {
-            setPress(false);
-          }}
-          onPress={() => {
-            if (worker.isWork) {
-              clickEndButton();
-            } else {
-              clickStartButton();
-            }
+      <ScrollView style={{flex: 1}}>
+        <View
+          style={{
+            height: SCREEN_HEIGHT - 180,
+            alignItems: 'center',
+            justifyContent: 'center',
           }}>
-          <View
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              width: 140,
-              height: 140,
-              borderRadius: 130,
-              borderWidth: 1,
-              borderColor: grey[9],
-              backgroundColor: grey[9],
-            }}>
-            <Text size={1.5} color={worker.isWork ? lime[3] : red[3]} fw="bold">
-              {worker.isWork ? '퇴근하기' : '출근하기'}
-            </Text>
+          <View style={{marginBottom: 50}}>
+            <Text size={1.5}>{worker.nickname}님 안녕하세요?</Text>
           </View>
-        </Pressable>
-
-        <View style={{width: 120}}>
-          <Button
-            style={{marginTop: 40}}
-            title="출/퇴근 기록 조회"
-            type="link"
-            bg="lime"
-            onPress={() => {
-              props.navigation.push('workDashboardScreen');
+          <Pressable
+            style={[
+              {
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                width: 150,
+                height: 150,
+                borderRadius: 150,
+                borderWidth: 1,
+                borderColor: grey[9],
+                backgroundColor: worker.isWork ? lime[3] : red[3],
+                marginBottom: 50,
+              },
+              !isPress
+                ? {
+                    shadowColor: '#000',
+                    shadowOffset: {
+                      width: 0,
+                      height: 3,
+                    },
+                    shadowOpacity: 0.2,
+                    shadowRadius: 3.84,
+                    elevation: 6,
+                  }
+                : {
+                    shadowColor: '#000',
+                    shadowOffset: {
+                      width: 0,
+                      height: 1,
+                    },
+                    shadowOpacity: 0.1,
+                    shadowRadius: 3.84,
+                    elevation: 1,
+                  },
+            ]}
+            onPressIn={() => {
+              setPress(true);
             }}
-          />
+            onPressOut={() => {
+              setPress(false);
+            }}
+            onPress={() => {
+              if (worker.isWork) {
+                clickEndButton();
+              } else {
+                clickStartButton();
+              }
+            }}>
+            <View
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                width: 140,
+                height: 140,
+                borderRadius: 130,
+                borderWidth: 1,
+                borderColor: grey[9],
+                backgroundColor: grey[9],
+              }}>
+              <Text
+                size={1.5}
+                color={worker.isWork ? lime[3] : red[3]}
+                fw="bold">
+                {worker.isWork ? '퇴근하기' : '출근하기'}
+              </Text>
+            </View>
+          </Pressable>
+
+          <View style={{width: 120, marginBottom: 50}}>
+            <Button
+              style={{marginTop: 40}}
+              title="출/퇴근 기록 조회"
+              type="link"
+              bg="lime"
+              onPress={() => {
+                props.navigation.push('workDashboardScreen');
+              }}
+            />
+          </View>
         </View>
-      </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }

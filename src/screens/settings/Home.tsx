@@ -1,5 +1,4 @@
 /* eslint-disable react-native/no-inline-styles */
-/* eslint-disable react/self-closing-comp */
 import {
   View,
   SafeAreaView,
@@ -42,7 +41,7 @@ export default function Home(props: Props) {
     ]);
   };
 
-  // 로그인 로직
+  // 로그아웃 로직
   const [logoutState, , _logout] = useAxios('post', '/v1/gowork/auth/logout');
   useEffect(() => {
     if (logoutState === 'success') {
@@ -56,6 +55,17 @@ export default function Home(props: Props) {
       {/* 헤더 */}
       <Header pageProps={props} title={'설정'} />
       <ScrollView style={{flex: 1, backgroundColor: grey[0], padding: 20}}>
+        <View style={{marginBottom: 30, marginTop: 10, paddingLeft: 20}}>
+          <Text fw="bold" size={1.2} color={grey[8]}>
+            {worker.departmentName}{' '}
+            {worker.level === '00'
+              ? '팀원'
+              : worker.level === '01'
+              ? '팀장'
+              : '대표'}{' '}
+            {worker.nickname}
+          </Text>
+        </View>
         {worker.isAdmin === 'Y' && (
           <View
             style={{

@@ -1,7 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 // 라이브러리
 import React, {useState} from 'react';
-import {View, TextInput, ViewProps} from 'react-native';
+import {View, TextInput, ViewProps, Platform} from 'react-native';
 import {lime, grey} from '@ant-design/colors';
 import Text from '../text/Text';
 
@@ -77,9 +77,10 @@ export default function TextField({
         <TextInput
           style={{
             color: isReadOnly ? grey[6] : grey[8],
-            padding: 12 * size,
+            paddingVertical: Platform.OS === 'ios' ? 12 * size : 6 * size,
+            paddingHorizontal: Platform.OS === 'ios' ? 12 * size : 8 * size,
             fontSize: 14 * size,
-            lineHeight: 14 * size * 1.2,
+            // lineHeight: 14 * size * 1.2,
           }}
           selectionColor={lime[3]}
           value={value}
