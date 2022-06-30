@@ -5,6 +5,7 @@ import {
   VirtualizedList,
   RefreshControl,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
 import React, {useCallback, useEffect, useState} from 'react';
 import Header from '../../components/global/Header';
@@ -19,28 +20,46 @@ interface Props {
 }
 
 import DepartmentProps from '../../types/Department';
+import AddWorkerModal from '../../components/department/AddModal';
+import EditWorkerModal from '../../components/department/EditModal';
 import Text from '../../components/text/Text';
 import {grey, lime} from '@ant-design/colors';
+import BottomModal from '../../components/modal/BottomModal';
+import FloatingButton from '../../components/input/FloatingButton';
 
 export default function DepartmentMngScreen(props: Props) {
   // 새로고침 여부
   const [isRefresh] = useState<boolean>(false);
+
+  // 모달 보이기
+  const [isViewAddModal, toggleAddModal] = useState<boolean>(false);
+  const [isViewEditModal, toggleEditModal] = useState<boolean>(false);
+  const [selectedData, setSelectedRowKey] = useState<DepartmentProps>({
+    rowKey: 0,
+    departmentName: '',
+  });
+
   // 부서 조회
   const [selectState, selectRes, _select] = useAxios(
     'get',
     '/v1/gowork/department',
   );
-
   // 부서 조회
   const _search = useCallback(() => {
     _select();
   }, [_select]);
-
   useEffect(() => {
     if (selectState === 'done') {
       _search();
     }
   }, [_search, selectState]);
+
+  // 선택된 로우키 변경 시 => 수정팝업
+  useEffect(() => {
+    if (selectedData.departmentName !== '') {
+      toggleEditModal(true);
+    }
+  }, [selectedData]);
 
   return (
     <SafeAreaView style={{backgroundColor: 'white', flex: 1}}>
@@ -67,7 +86,14 @@ export default function DepartmentMngScreen(props: Props) {
         data={selectRes}
         initialNumToRender={10}
         renderItem={({index, item}) => {
-          return <DepartmentCard key={index} data={item} />;
+          return (
+            <DepartmentCard
+              key={index}
+              data={item}
+              reload={_search}
+              setSelectedRowKey={setSelectedRowKey}
+            />
+          );
         }}
         keyExtractor={item => String(item.rowKey)}
         getItemCount={(data: DepartmentProps[]) => data?.length}
@@ -76,15 +102,85 @@ export default function DepartmentMngScreen(props: Props) {
           <RefreshControl refreshing={isRefresh} onRefresh={_search} />
         }
       />
+
+      <FloatingButton
+        onPress={() => {
+          toggleAddModal(true);
+        }}
+      />
+      <BottomModal
+        height={300}
+        isView={isViewAddModal}
+        onClose={() => {
+          toggleAddModal(false);
+        }}>
+        <AddWorkerModal
+          isViewModal={isViewAddModal}
+          onClose={() => {
+            toggleAddModal(false);
+            _search();
+          }}
+        />
+      </BottomModal>
+      <BottomModal
+        height={300}
+        isView={isViewEditModal}
+        onClose={() => {
+          toggleEditModal(false);
+        }}>
+        <EditWorkerModal
+          isViewModal={isViewEditModal}
+          data={selectedData}
+          onClose={() => {
+            toggleEditModal(false);
+            _search();
+          }}
+        />
+      </BottomModal>
     </SafeAreaView>
   );
 }
 
 interface DepartmentCardProps {
   data: DepartmentProps;
+  reload: () => void;
+  setSelectedRowKey: any;
 }
 
-function DepartmentCard({data}: DepartmentCardProps) {
+function DepartmentCard({
+  data,
+  reload,
+  setSelectedRowKey,
+}: DepartmentCardProps) {
+  // 직원 삭제
+  const [deleteState, , _delete] = useAxios(
+    'delete',
+    `/v1/gowork/department/${data.rowKey}`,
+  );
+  useEffect(() => {
+    if (deleteState === 'success') {
+      reload();
+    }
+  }, [deleteState, reload]);
+
+  // 삭제 뻐튼 클릭 이벤트
+  const onPressDeleteButton = () => {
+    Alert.alert('알림', '정말 삭제 하시겠습니까?', [
+      {text: '취소', style: 'cancel'},
+      {
+        text: '네',
+        onPress: async () => {
+          _delete();
+        },
+      },
+    ]);
+  };
+
+  // 수정 뻐튼 클릭 이벤트
+  const onPressEditButton = () => {
+    setSelectedRowKey(data);
+  };
+
   return (
     <View
       style={{
@@ -100,6 +196,7 @@ function DepartmentCard({data}: DepartmentCardProps) {
         </Text>
       </View>
       <TouchableOpacity
+        onPress={onPressEditButton}
         style={{
           width: 44,
           height: 44,
@@ -110,6 +207,7 @@ function DepartmentCard({data}: DepartmentCardProps) {
         <FontAwesomeIcon icon={faPen} size={16} color={grey[9]} />
       </TouchableOpacity>
       <TouchableOpacity
+        onPress={onPressDeleteButton}
         style={{
           width: 44,
           height: 44,
