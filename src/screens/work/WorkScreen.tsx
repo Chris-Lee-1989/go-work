@@ -3,21 +3,20 @@ import {
   Alert,
   Dimensions,
   Pressable,
-  RefreshControl,
   SafeAreaView,
   ScrollView,
   View,
 } from 'react-native';
 import React, {useCallback, useEffect, useState} from 'react';
 import Header from '../../components/global/Header';
-import {useRecoilState, useSetRecoilState} from 'recoil';
+import {useRecoilState} from 'recoil';
 import workerState from '../../atoms/workerState';
 import {grey, lime, red} from '@ant-design/colors';
 import Text from '../../components/text/Text';
 import Button from '../../components/input/Button';
 import useAxios from '../../modules/useAxios';
-import spinnerState from '../../atoms/spinnerState';
 import Geolocation from 'react-native-geolocation-service';
+import {useToast} from 'react-native-toast-notifications';
 
 // 인터페이스
 interface Props {
@@ -31,8 +30,8 @@ interface ILocation {
 }
 
 export default function WorkScreen(props: Props) {
-  // 새로고침 여부
-  const [isRefresh] = useState<boolean>(false);
+  // Toast
+  const toast = useToast();
   // 화면 높이
   const SCREEN_HEIGHT = Dimensions.get('screen').height;
   // 직원 정보
@@ -41,21 +40,14 @@ export default function WorkScreen(props: Props) {
   // 출/퇴근 버튼 press 여부
   const [isPress, setPress] = useState<boolean>(false);
 
-  // 스피너
-  const setSpinner = useSetRecoilState(spinnerState);
-
   // 출퇴근 정보 업데이트
   const [workingState, workingRes, _working] = useAxios(
     'post',
     '/v1/gowork/work/working',
   );
   useEffect(() => {
-    if (workingState === 'loading') {
-    } else {
-      setSpinner(false);
-      if (workingState === 'success') {
-        setWorker({...worker, isWork: workingRes?.isWork === 'Y'});
-      }
+    if (workingState === 'success') {
+      setWorker({...worker, isWork: workingRes?.isWork === 'Y'});
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [workingState]);
@@ -67,21 +59,23 @@ export default function WorkScreen(props: Props) {
       {
         text: '네',
         onPress: async () => {
-          setSpinner(true);
           Geolocation.getCurrentPosition(
+            // success callback
             position => {
               const {latitude, longitude} = position.coords;
               _working({isWork: 'Y', latitude, longitude});
             },
+            // error callback
             error => {
-              console.log(error.code, error.message);
+              toast.show(`${error.code} ${error.message}`, {type: 'error'});
             },
+            // options
             {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
           );
         },
       },
     ]);
-  }, [_working, setSpinner]);
+  }, [_working, toast]);
 
   // 퇴근 버튼 클릭 이벤트
   const clickEndButton = useCallback(() => {
@@ -174,7 +168,11 @@ export default function WorkScreen(props: Props) {
                 size={1.5}
                 color={worker.isWork ? lime[3] : red[3]}
                 fw="bold">
-                {worker.isWork ? '퇴근하기' : '출근하기'}
+                {workingState === 'loading'
+                  ? '로딩중..'
+                  : worker.isWork
+                  ? '퇴근하기'
+                  : '출근하기'}
               </Text>
             </View>
           </Pressable>

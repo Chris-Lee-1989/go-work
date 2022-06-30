@@ -54,6 +54,7 @@ export default function indexRouter() {
         ...tokenRes,
         isLogin: true,
         isWork: tokenRes.isWork === 'Y',
+        isAdmin: tokenRes.isAdmin,
       });
     }
   }, [setWorker, tokenRes, tokenState]);

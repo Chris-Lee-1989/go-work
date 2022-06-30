@@ -24,17 +24,8 @@
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>NSAppTransportSecurity</key>
-	<dict>
-		<key>NSExceptionDomains</key>
-		<dict>
-			<key>localhost</key>
-			<dict>
-				<key>NSExceptionAllowsInsecureHTTPLoads</key>
-				<true/>
-			</dict>
-		</dict>
-	</dict>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Kkotfarm requires user’s location for better user experience.</string>
 	<key>NSCameraUsageDescription</key>
 	<string>For taking photos</string>
 	<key>NSLocationWhenInUseUsageDescription</key>

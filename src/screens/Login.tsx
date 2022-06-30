@@ -1,9 +1,8 @@
 /* eslint-disable react-native/no-inline-styles */
 import {View, SafeAreaView, KeyboardAvoidingView, Platform} from 'react-native';
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState, useRef} from 'react';
 import useAxios from '../modules/useAxios';
-import spinnerState from '../atoms/spinnerState';
-import {useRecoilState, useSetRecoilState} from 'recoil';
+import {useRecoilState} from 'recoil';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import workerState from '../atoms/workerState';
 import {useToast} from 'react-native-toast-notifications';
@@ -40,9 +39,6 @@ export default function Login(props: Props) {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   let [worker, setWorker] = useRecoilState(workerState);
 
-  // 로딩 스피너
-  const setSpinner = useSetRecoilState(spinnerState);
-
   // 로그인 데이터
   const [email, setEmail] = useState<string>('');
   const [pw, setPW] = useState<string>('');
@@ -66,6 +62,7 @@ export default function Login(props: Props) {
         ...worker,
         isLogin: true,
         isWork: worker.isWork === 'Y',
+        isAdmin: worker.isAdmin,
       });
       props.navigation.replace('tabRouter');
     },
@@ -79,9 +76,7 @@ export default function Login(props: Props) {
   );
   useEffect(() => {
     if (loginState === 'loading') {
-      setSpinner(true);
     } else {
-      setSpinner(false);
       if (loginState === 'success') {
         successLogin(loginRes);
       }
@@ -90,7 +85,10 @@ export default function Login(props: Props) {
         toast.show(loginRes.message, {type: 'warning'});
       }
     }
-  }, [loginRes, loginState, setSpinner, successLogin, toast]);
+  }, [loginRes, loginState, successLogin, toast]);
+
+  // 두번째 인풋
+  const textInput = useRef<any>(null);
 
   return (
     <KeyboardAvoidingView
@@ -121,15 +119,22 @@ export default function Login(props: Props) {
               value={email}
               onChange={value => setEmail(value)}
               isReadOnly={loginState === 'loading'}
+              returnKeyType="next"
+              onSubmit={() => {
+                textInput.current._focus();
+              }}
             />
             <View style={{padding: 4}} />
             <TextField
+              ref={textInput}
               type="password"
               size={1}
               placeholder="비밀번호"
               value={pw}
               onChange={value => setPW(value)}
               isReadOnly={loginState === 'loading'}
+              returnKeyType="go"
+              onSubmit={onPressLoginButton}
             />
             <View style={{padding: 4}} />
             <Button

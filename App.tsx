@@ -3,7 +3,6 @@ import React, {useEffect} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {RecoilRoot} from 'recoil';
 import IndexRouter from './src/indexRouter';
-import Spinner from './src/components/global/Spinner';
 import {ToastProvider} from 'react-native-toast-notifications';
 import {Platform, Text, View, StatusBar} from 'react-native';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
@@ -38,8 +37,12 @@ const App = () => {
 
   return (
     <RecoilRoot>
-      <StatusBar animated={true} barStyle="dark-content" />
-      <Spinner />
+      <StatusBar
+        // hidden={true}
+        // animated={true}
+        barStyle="dark-content"
+        backgroundColor="white"
+      />
       <NavigationContainer>
         <ToastProvider
           placement="top"
