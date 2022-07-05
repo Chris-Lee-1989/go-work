@@ -50,6 +50,12 @@ export default function indexRouter() {
   useEffect(() => {
     if (tokenState === 'success') {
       AsyncStorage.setItem('access_token', tokenRes?.token);
+      console.log({
+        ...tokenRes,
+        isLogin: true,
+        isWork: tokenRes.isWork === 'Y',
+        isAdmin: tokenRes.isAdmin,
+      });
       setWorker({
         ...tokenRes,
         isLogin: true,

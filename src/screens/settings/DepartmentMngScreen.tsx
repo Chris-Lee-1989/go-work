@@ -27,7 +27,7 @@ import {grey, lime} from '@ant-design/colors';
 import BottomModal from '../../components/modal/BottomModal';
 import FloatingButton from '../../components/input/FloatingButton';
 
-export default function DepartmentMngScreen(props: Props) {
+function DepartmentMngScreen(props: Props) {
   // 새로고침 여부
   const [isRefresh] = useState<boolean>(false);
 
@@ -220,3 +220,5 @@ function DepartmentCard({
     </View>
   );
 }
+
+export default React.memo(DepartmentMngScreen);

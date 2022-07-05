@@ -21,6 +21,7 @@ const App = () => {
     if (Platform.OS === 'ios') {
       requestUserPermission();
     }
+    Geolocation.requestAuthorization('whenInUse');
   }, []);
 
   async function requestUserPermission() {
@@ -32,7 +33,6 @@ const App = () => {
     if (enabled) {
       // console.log('Authorization status ' + Platform.OS + ' : ', authStatus);
     }
-    Geolocation.requestAuthorization('whenInUse');
   }
 
   return (
